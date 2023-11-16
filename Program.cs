@@ -81,23 +81,7 @@ namespace MJU23v_DTP_T2
                 }
                 else if (command == "load")
                 {
-                    if (arg.Length == 2)
-                    {
-                        filename = $@"..\..\..\links\{arg[1]}";
-                    }
-                    links = new List<Link>();
-                    using (StreamReader sr = new StreamReader(filename))
-                    {
-                        int numbering = 0;
-                        string line = sr.ReadLine();
-                        while (line != null)
-                        {
-                            Console.WriteLine(line);
-                            Link Links = new Link(line);
-                            links.Add(Links);
-                            line = sr.ReadLine();
-                        }
-                    }
+                    LoadCommand(filename, arg);
                 }
                 else if (command == "list")
                 {
@@ -166,5 +150,26 @@ namespace MJU23v_DTP_T2
                 }
             } while (true);
         }
+        static void LoadCommand(string filename, string[] arg)
+        {
+            if (arg.Length == 2)
+            {
+                filename = $@"..\..\..\links\{arg[1]}";
+            }
+            links = new List<Link>();
+            using (StreamReader sr = new StreamReader(filename))
+            {
+                int numbering = 0;
+                string line = sr.ReadLine();
+                while (line != null)
+                {
+                    Console.WriteLine(line);
+                    Link Links = new Link(line);
+                    links.Add(Links);
+                    line = sr.ReadLine();
+                }
+            }
+        }
+
     }
 }
