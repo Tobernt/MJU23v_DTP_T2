@@ -55,14 +55,6 @@ namespace MJU23v_DTP_T2
                 Console.WriteLine("Welcome to the link list! write 'help' for help!");
                 int numbering = 0;
                 string line = sr.ReadLine();
-                while (line != null)
-                {
-                    /* Console.WriteLine(line);
-                    Link L = new Link(line);
-                    L.Print(numbering++);
-                    links.Add(L);*/
-                    line = sr.ReadLine();
-                }
             }
             do
             {
