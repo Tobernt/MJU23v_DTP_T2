@@ -93,17 +93,7 @@ namespace MJU23v_DTP_T2
                 }
                 else if (command == "Save")
                 {
-                    if (arg.Length == 2)
-                    {
-                        filename = $@"..\..\..\links\{arg[1]}";
-                    }
-                    using (StreamWriter sr = new StreamWriter(filename))
-                    {
-                        foreach(Link Links in links)
-                        {
-                            sr.WriteLine(Links.ToString());
-                        }
-                    }
+                    filename = SaveEntry(filename, arg);
                 }
                 else if (command == "take")
                 {
@@ -135,6 +125,23 @@ namespace MJU23v_DTP_T2
                     Console.WriteLine("Unknown Command: '{command}'");
                 }
             } while (true);
+        }
+
+        private static string SaveEntry(string filename, string[] arg)
+        {
+            if (arg.Length == 2)
+            {
+                filename = $@"..\..\..\links\{arg[1]}";
+            }
+            using (StreamWriter sr = new StreamWriter(filename))
+            {
+                foreach (Link Links in links)
+                {
+                    sr.WriteLine(Links.ToString());
+                }
+            }
+
+            return filename;
         }
 
         private static void ListEntries()
