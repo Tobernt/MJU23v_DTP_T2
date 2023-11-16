@@ -101,27 +101,32 @@ namespace MJU23v_DTP_T2
                 }
                 else if (command == "open")
                 {
-                    if (arg[1] == "group")
-                    {
-                        foreach (Link Links in links)
-                        {
-                            if (Links.group == arg[2])
-                            {
-                                Links.OpenLink();
-                            }
-                        }
-                    }
-                    else if (arg[1] == "link")
-                    {
-                        int ix = Int32.Parse(arg[2]);
-                        links[ix].OpenLink();
-                    }
+                    OpenLogic(arg);
                 }
                 else
                 {
                     Console.WriteLine("Unknown Command: '{command}'");
                 }
             } while (true);
+        }
+
+        private static void OpenLogic(string[] arg)
+        {
+            if (arg[1] == "group")
+            {
+                foreach (Link Links in links)
+                {
+                    if (Links.group == arg[2])
+                    {
+                        Links.OpenLink();
+                    }
+                }
+            }
+            else if (arg[1] == "link")
+            {
+                int ix = Int32.Parse(arg[2]);
+                links[ix].OpenLink();
+            }
         }
 
         private static string SaveEntry(string filename, string[] arg)
