@@ -178,7 +178,7 @@ namespace MJU23v_DTP_T2
             Console.WriteLine("list           - Displays current list");
             Console.WriteLine("new            - Add new entry to list");
             Console.WriteLine("Save           - Saves list");
-            Console.WriteLine("remove x    - Removes entry based on number in list");
+            Console.WriteLine("remove x       - Removes entry based on number in list");
             Console.WriteLine("open group x   - Opens the corresponding group to number in list");
             Console.WriteLine("open link x    - Opens the corresponding link to number in list");
         }
@@ -190,7 +190,7 @@ namespace MJU23v_DTP_T2
                 filename = $@"..\..\..\links\{arg[1]}";
             }
             links = new List<Link>();
-            using (StreamReader sr = new StreamReader(filename))
+            using (StreamReader sr = new StreamReader(filename)) //Fixme If input load x crashes
             {
                 int numbering = 0;
                 string line = sr.ReadLine();
@@ -203,6 +203,5 @@ namespace MJU23v_DTP_T2
                 }
             }
         }
-
     }
 }
