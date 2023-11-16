@@ -186,11 +186,11 @@ namespace MJU23v_DTP_T2
                 string line = sr.ReadLine();
                 while (line != null)
                 {
-                    Console.WriteLine(line);
                     Link Links = new Link(line);
                     links.Add(Links);
                     line = sr.ReadLine();
                 }
+                Console.WriteLine("Successfully loaded");
             }
         }
     }
