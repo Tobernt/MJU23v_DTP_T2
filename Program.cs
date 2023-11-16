@@ -175,22 +175,29 @@ namespace MJU23v_DTP_T2
 
         static void LoadCommand(string filename, string[] arg)
         {
-            if (arg.Length == 2)
+            try
             {
-                filename = $@"..\..\..\links\{arg[1]}";
-            }
-            links = new List<Link>();
-            using (StreamReader sr = new StreamReader(filename)) //Fixme If input load x crashes
-            {
-                int numbering = 0;
-                string line = sr.ReadLine();
-                while (line != null)
+                if (arg.Length == 2)
                 {
-                    Link Links = new Link(line);
-                    links.Add(Links);
-                    line = sr.ReadLine();
+                    filename = $@"..\..\..\links\{arg[1]}";
                 }
-                Console.WriteLine("Successfully loaded");
+                links = new List<Link>();
+                using (StreamReader sr = new StreamReader(filename))
+                {
+                    int numbering = 0;
+                    string line = sr.ReadLine();
+                    while (line != null)
+                    {
+                        Link Links = new Link(line);
+                        links.Add(Links);
+                        line = sr.ReadLine();
+                    }
+                    Console.WriteLine("Successfully loaded");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to load: {ex.Message}");
             }
         }
     }
