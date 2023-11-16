@@ -96,9 +96,16 @@ namespace MJU23v_DTP_T2
                 {
                     filename = SaveEntry(filename, arg);
                 }
-                else if (command == "remove") //FIXMe Prevent from writing larger number then links length
+                else if (command == "remove")
                 {
-                        links.RemoveAt(Int32.Parse(arg[1]));
+                    if (int.TryParse(arg[1], out int index) && index >= 0 && index < links.Count)
+                    {
+                        links.RemoveAt(index);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid index or link not found.");
+                    }
                 }
                 else if (command == "open")
                 {
