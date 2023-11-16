@@ -40,12 +40,7 @@ namespace MJU23v_DTP_T2
                 application.StartInfo.UseShellExecute = true;
                 application.StartInfo.FileName = link;
                 application.Start();
-                // application.WaitForExit();
             }
-            /*public string ToString()
-            {
-                return $"{category}|{group}|{name}|{description}|{link}";
-            }*/
         }
         static void Main(string[] args)
         {
