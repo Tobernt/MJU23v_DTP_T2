@@ -98,14 +98,7 @@ namespace MJU23v_DTP_T2
                 }
                 else if (command == "remove")
                 {
-                    if (int.TryParse(arg[1], out int index) && index >= 0 && index < links.Count)
-                    {
-                        links.RemoveAt(index);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid index or link not found.");
-                    }
+                    RemoveEntry(arg);
                 }
                 else if (command == "open")
                 {
@@ -116,6 +109,18 @@ namespace MJU23v_DTP_T2
                     Console.WriteLine("Unknown Command: '{command}'");
                 }
             } while (true);
+        }
+
+        private static void RemoveEntry(string[] arg)
+        {
+            if (int.TryParse(arg[1], out int index) && index >= 0 && index < links.Count)
+            {
+                links.RemoveAt(index);
+            }
+            else
+            {
+                Console.WriteLine("Invalid index or link not found.");
+            }
         }
 
         private static void OpenLogic(string[] arg)
