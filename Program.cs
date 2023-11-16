@@ -90,19 +90,7 @@ namespace MJU23v_DTP_T2
                 }
                 else if (command == "new")
                 {
-                    Console.WriteLine("Create a new link:");
-                    Console.Write("  enter Category: ");
-                    string category = Console.ReadLine();
-                    Console.Write("  enter Group: ");
-                    string group = Console.ReadLine();
-                    Console.Write("  enter Name: ");
-                    string name = Console.ReadLine();
-                    Console.Write("  enter Description: ");
-                    string descr = Console.ReadLine();
-                    Console.Write("  Enter Link: ");
-                    string link = Console.ReadLine();
-                    Link newLink = new Link(category, group, name, descr, link);
-                    links.Add(newLink);
+                    NewEntry();
                 }
                 else if (command == "Save")
                 {
@@ -148,6 +136,23 @@ namespace MJU23v_DTP_T2
                     Console.WriteLine("Unknown Command: '{command}'");
                 }
             } while (true);
+        }
+
+        private static void NewEntry()
+        {
+            Console.WriteLine("Create a new link:");
+            Console.Write("  enter Category: ");
+            string category = Console.ReadLine();
+            Console.Write("  enter Group: ");
+            string group = Console.ReadLine();
+            Console.Write("  enter Name: ");
+            string name = Console.ReadLine();
+            Console.Write("  enter Description: ");
+            string descr = Console.ReadLine();
+            Console.Write("  Enter Link: ");
+            string link = Console.ReadLine();
+            Link newLink = new Link(category, group, name, descr, link);
+            links.Add(newLink);
         }
 
         private static void PrintHelp()
