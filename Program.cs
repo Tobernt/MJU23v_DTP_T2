@@ -69,6 +69,7 @@ namespace MJU23v_DTP_T2
                 string cmd = Console.ReadLine().Trim();
                 string[] arg = cmd.Split();
                 string command = arg[0];
+
                 if (command == "quit")
                 {
                     Console.WriteLine("Goodbye!");
@@ -84,9 +85,7 @@ namespace MJU23v_DTP_T2
                 }
                 else if (command == "list")
                 {
-                    int numbering = 0;
-                    foreach (Link Links in links)
-                        Links.Print(numbering++);
+                    ListEntries();
                 }
                 else if (command == "new")
                 {
@@ -136,6 +135,13 @@ namespace MJU23v_DTP_T2
                     Console.WriteLine("Unknown Command: '{command}'");
                 }
             } while (true);
+        }
+
+        private static void ListEntries()
+        {
+            int numbering = 0;
+            foreach (Link Links in links)
+                Links.Print(numbering++);
         }
 
         private static void NewEntry()
