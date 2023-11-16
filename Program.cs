@@ -10,13 +10,13 @@ namespace MJU23v_DTP_T2
         static List<Link> links = new List<Link>();
         class Link
         {
-            public string category, group, name, descr, link;
-            public Link(string category, string group, string name, string descr, string link)
+            public string category, group, name, description, link;
+            public Link(string category, string group, string name, string description, string link)
             {
                 this.category = category;
                 this.group = group;
                 this.name = name;
-                this.descr = descr;
+                this.description = description;
                 this.link = link;
             }
 
@@ -26,12 +26,12 @@ namespace MJU23v_DTP_T2
                 category = part[0];
                 group = part[1];
                 name = part[2];
-                descr = part[3];
+                description = part[3];
                 link = part[4];
             }
-            public void Print(int i)
+            public void Print(int index)
             {
-                Console.WriteLine($"|{i,-2}|{category,-10}|{group,-10}|{name,-20}|{descr,-40}|");
+                Console.WriteLine($"|{index,-2}|{category,-10}|{group,-10}|{name,-20}|{description,-40}|");
             }
             public void OpenLink()
             {
@@ -43,7 +43,7 @@ namespace MJU23v_DTP_T2
             }
             public string ToString()
             {
-                return $"{category}|{group}|{name}|{descr}|{link}";
+                return $"{category}|{group}|{name}|{description}|{link}";
             }
         }
         static void Main(string[] args)
@@ -51,34 +51,35 @@ namespace MJU23v_DTP_T2
             string filename = @"..\..\..\links\links.lis";
             using (StreamReader sr = new StreamReader(filename))
             {
-                int i = 0;
+                int numbering = 0;
                 string line = sr.ReadLine();
                 while (line != null)
                 {
                     Console.WriteLine(line);
                     Link L = new Link(line);
-                    L.Print(i++);
+                    L.Print(numbering++);
                     links.Add(L);
                     line = sr.ReadLine();
                 }
             }
-            Console.WriteLine("Välkommen till länklistan! Skriv 'hjälp' för hjälp!");
+            Console.WriteLine("Welcome to the link list! write 'help' for help!");
             do
             {
                 Console.Write("> ");
                 string cmd = Console.ReadLine().Trim();
                 string[] arg = cmd.Split();
                 string command = arg[0];
-                if (command == "sluta")
+                if (command == "quit")
                 {
-                    Console.WriteLine("Hej då! Välkommen åter!");
+                    Console.WriteLine("Goodbye!");
+                    break;
                 }
-                else if (command == "hjälp")
+                else if (command == "help")
                 {
-                    Console.WriteLine("hjälp           - skriv ut den här hjälpen");
-                    Console.WriteLine("sluta           - avsluta programmet");
+                    Console.WriteLine("help           - Check help");
+                    Console.WriteLine("quit           - Close program");
                 }
-                else if (command == "ladda")
+                else if (command == "load")
                 {
                     if (arg.Length == 2)
                     {
@@ -87,40 +88,40 @@ namespace MJU23v_DTP_T2
                     links = new List<Link>();
                     using (StreamReader sr = new StreamReader(filename))
                     {
-                        int i = 0;
+                        int numbering = 0;
                         string line = sr.ReadLine();
                         while (line != null)
                         {
                             Console.WriteLine(line);
-                            Link L = new Link(line);
-                            links.Add(L);
+                            Link Links = new Link(line);
+                            links.Add(Links);
                             line = sr.ReadLine();
                         }
                     }
                 }
-                else if (command == "lista")
+                else if (command == "list")
                 {
-                    int i = 0;
-                    foreach (Link L in links)
-                        L.Print(i++);
+                    int numbering = 0;
+                    foreach (Link Links in links)
+                        Links.Print(numbering++);
                 }
-                else if (command == "ny")
+                else if (command == "new")
                 {
-                    Console.WriteLine("Skapa en ny länk:");
-                    Console.Write("  ange kategori: ");
+                    Console.WriteLine("Create a new link:");
+                    Console.Write("  enter Category: ");
                     string category = Console.ReadLine();
-                    Console.Write("  ange grupp: ");
+                    Console.Write("  enter Group: ");
                     string group = Console.ReadLine();
-                    Console.Write("  ange namn: ");
+                    Console.Write("  enter Name: ");
                     string name = Console.ReadLine();
-                    Console.Write("  ange beskrivning: ");
+                    Console.Write("  enter Description: ");
                     string descr = Console.ReadLine();
-                    Console.Write("  ange länk: ");
+                    Console.Write("  Enter Link: ");
                     string link = Console.ReadLine();
                     Link newLink = new Link(category, group, name, descr, link);
                     links.Add(newLink);
                 }
-                else if (command == "spara")
+                else if (command == "Save")
                 {
                     if (arg.Length == 2)
                     {
@@ -128,32 +129,32 @@ namespace MJU23v_DTP_T2
                     }
                     using (StreamWriter sr = new StreamWriter(filename))
                     {
-                        foreach(Link L in links)
+                        foreach(Link Links in links)
                         {
-                            sr.WriteLine(L.ToString());
+                            sr.WriteLine(Links.ToString());
                         }
                     }
                 }
-                else if (command == "ta")
+                else if (command == "take")
                 {
-                    if (arg[1] == "bort")
+                    if (arg[1] == "away")
                     {
                         links.RemoveAt(Int32.Parse(arg[2]));
                     }
                 }
-                else if (command == "öppna")
+                else if (command == "open")
                 {
-                    if (arg[1] == "grupp")
+                    if (arg[1] == "group")
                     {
-                        foreach (Link L in links)
+                        foreach (Link Links in links)
                         {
-                            if (L.group == arg[2])
+                            if (Links.group == arg[2])
                             {
-                                L.OpenLink();
+                                Links.OpenLink();
                             }
                         }
                     }
-                    else if (arg[1] == "länk")
+                    else if (arg[1] == "link")
                     {
                         int ix = Int32.Parse(arg[2]);
                         links[ix].OpenLink();
@@ -161,7 +162,7 @@ namespace MJU23v_DTP_T2
                 }
                 else
                 {
-                    Console.WriteLine("Okänt kommando: '{command}'");
+                    Console.WriteLine("Unknown Command: '{command}'");
                 }
             } while (true);
         }
