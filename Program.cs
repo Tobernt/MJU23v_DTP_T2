@@ -95,12 +95,9 @@ namespace MJU23v_DTP_T2
                 {
                     filename = SaveEntry(filename, arg);
                 }
-                else if (command == "take")
+                else if (command == "remove")
                 {
-                    if (arg[1] == "away")
-                    {
-                        links.RemoveAt(Int32.Parse(arg[2]));
-                    }
+                        links.RemoveAt(Int32.Parse(arg[1]));
                 }
                 else if (command == "open")
                 {
@@ -176,7 +173,7 @@ namespace MJU23v_DTP_T2
             Console.WriteLine("list           - Displays current list");
             Console.WriteLine("new            - Add new entry to list");
             Console.WriteLine("Save           - Saves list");
-            Console.WriteLine("Take away x    - Removes entry based on number in list");
+            Console.WriteLine("remove x    - Removes entry based on number in list");
             Console.WriteLine("open group x   - Opens the corresponding group to number in list");
             Console.WriteLine("open link x    - Opens the corresponding link to number in list");
         }
