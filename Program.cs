@@ -33,6 +33,7 @@ namespace MJU23v_DTP_T2
             {
                 Console.WriteLine($"|{index,-2}|{category,-10}|{group,-10}|{name,-20}|{description,-40}|");
             }
+
             public void OpenLink()
             {
                 Process application = new Process();
@@ -41,10 +42,10 @@ namespace MJU23v_DTP_T2
                 application.Start();
                 // application.WaitForExit();
             }
-            public string ToString()
+            /*public string ToString()
             {
                 return $"{category}|{group}|{name}|{description}|{link}";
-            }
+            }*/
         }
         static void Main(string[] args)
         {
@@ -112,19 +113,9 @@ namespace MJU23v_DTP_T2
 
         private static void OpenLogic(string[] arg)
         {
-            if (arg[1] == "group")
+            if (arg[1] == "link")
             {
-                foreach (Link Links in links)
-                {
-                    if (Links.group == arg[2])
-                    {
-                        Links.OpenLink();
-                    }
-                }
-            }
-            else if (arg[1] == "link")
-            {
-                int ix = Int32.Parse(arg[2]);
+                int ix = Int32.Parse(arg[2]); //FIXMe writing incorrect crashes
                 links[ix].OpenLink();
             }
         }
@@ -179,7 +170,6 @@ namespace MJU23v_DTP_T2
             Console.WriteLine("new            - Add new entry to list");
             Console.WriteLine("Save           - Saves list");
             Console.WriteLine("remove x       - Removes entry based on number in list");
-            Console.WriteLine("open group x   - Opens the corresponding group to number in list");
             Console.WriteLine("open link x    - Opens the corresponding link to number in list");
         }
 
