@@ -91,7 +91,7 @@ namespace MJU23v_DTP_T2
                 {
                     NewEntry();
                 }
-                else if (command == "Save")
+                else if (command == "save")
                 {
                     filename = SaveEntry(filename, arg);
                 }
