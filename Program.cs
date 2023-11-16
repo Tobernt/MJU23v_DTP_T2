@@ -95,7 +95,7 @@ namespace MJU23v_DTP_T2
                 {
                     filename = SaveEntry(filename, arg);
                 }
-                else if (command == "remove")
+                else if (command == "remove") //FIXMe Prevent from writing larger number then links length
                 {
                         links.RemoveAt(Int32.Parse(arg[1]));
                 }
