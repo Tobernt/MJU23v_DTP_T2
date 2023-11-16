@@ -113,10 +113,20 @@ namespace MJU23v_DTP_T2
 
         private static void OpenLogic(string[] arg)
         {
-            if (arg[1] == "link")
+            if (arg[1] == "link" && arg.Length >= 3) // Check if 'link' command has enough arguments
             {
-                int ix = Int32.Parse(arg[2]); //FIXMe writing incorrect crashes
-                links[ix].OpenLink();
+                if (int.TryParse(arg[2], out int ix) && ix >= 0 && ix < links.Count) // Validate index
+                {
+                    links[ix].OpenLink();
+                }
+                else
+                {
+                    Console.WriteLine("Invalid index or link not found.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid command or insufficient arguments.");
             }
         }
 
