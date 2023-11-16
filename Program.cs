@@ -76,8 +76,7 @@ namespace MJU23v_DTP_T2
                 }
                 else if (command == "help")
                 {
-                    Console.WriteLine("help           - Check help");
-                    Console.WriteLine("quit           - Close program");
+                    PrintHelp();
                 }
                 else if (command == "load")
                 {
@@ -150,6 +149,20 @@ namespace MJU23v_DTP_T2
                 }
             } while (true);
         }
+
+        private static void PrintHelp()
+        {
+            Console.WriteLine("help           - Check help");
+            Console.WriteLine("quit           - Closes program");
+            Console.WriteLine("load           - Loads list file");
+            Console.WriteLine("list           - Displays current list");
+            Console.WriteLine("new            - Add new entry to list");
+            Console.WriteLine("Save           - Saves list");
+            Console.WriteLine("Take away x    - Removes entry based on number in list");
+            Console.WriteLine("open group x   - Opens the corresponding group to number in list");
+            Console.WriteLine("open link x    - Opens the corresponding link to number in list");
+        }
+
         static void LoadCommand(string filename, string[] arg)
         {
             if (arg.Length == 2)
