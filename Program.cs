@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.IO.Enumeration;
-using System.Net.Http.Headers;
-using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace MJU23v_DTP_T2
 {
@@ -23,12 +20,15 @@ namespace MJU23v_DTP_T2
             public Link(string line)
             {
                 string[] part = line.Split('|');
+                if (part.Length != 5) throw new FormatException("Expected five pipe-delimited fields.");
                 category = part[0];
                 group = part[1];
                 name = part[2];
                 description = part[3];
                 link = part[4];
             }
+            public override string ToString() => string.Join("|", category, group, name, description, link);
+
             public void Print(int index)
             {
                 Console.WriteLine($"|{index,-2}|{category,-10}|{group,-10}|{name,-20}|{description,-40}|");
@@ -36,6 +36,12 @@ namespace MJU23v_DTP_T2
 
             public void OpenLink()
             {
+                if (!Uri.TryCreate(link, UriKind.Absolute, out var uri) ||
+                    (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+                {
+                    Console.WriteLine("Only HTTP and HTTPS links can be opened.");
+                    return;
+                }
                 Process application = new Process();
                 application.StartInfo.UseShellExecute = true;
                 application.StartInfo.FileName = link;
@@ -45,18 +51,16 @@ namespace MJU23v_DTP_T2
         static void Main(string[] args)
         {
             string filename = @"..\..\..\links\links.lis";
-            using (StreamReader sr = new StreamReader(filename))
-            {
-                Console.WriteLine("Welcome to the link list! write 'help' for help!");
-                int numbering = 0;
-                string line = sr.ReadLine();
-            }
+            Console.WriteLine("Welcome to the link list! Type 'help' for commands.");
+            LoadCommand(filename, new[] { "load" });
             do
             {
                 Console.Write("> ");
-                string cmd = Console.ReadLine().Trim();
-                string[] arg = cmd.Split();
-                string command = arg[0];
+                string? cmd = Console.ReadLine();
+                if (cmd == null) break;
+                string[] arg = cmd.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                if (arg.Length == 0) continue;
+                string command = arg[0].ToLowerInvariant();
 
                 if (command == "quit")
                 {
@@ -93,14 +97,14 @@ namespace MJU23v_DTP_T2
                 }
                 else
                 {
-                    Console.WriteLine("Unknown Command: '{command}'");
+                    Console.WriteLine($"Unknown command: '{command}'");
                 }
             } while (true);
         }
 
         private static void RemoveEntry(string[] arg)
         {
-            if (int.TryParse(arg[1], out int index) && index >= 0 && index < links.Count)
+            if (arg.Length >= 2 && int.TryParse(arg[1], out int index) && index >= 0 && index < links.Count)
             {
                 links.RemoveAt(index);
             }
@@ -112,7 +116,7 @@ namespace MJU23v_DTP_T2
 
         private static void OpenLogic(string[] arg)
         {
-            if (arg[1] == "link" && arg.Length >= 3) // Check if 'link' command has enough arguments
+            if (arg.Length >= 3 && arg[1] == "link") // Check if 'link' command has enough arguments
             {
                 if (int.TryParse(arg[2], out int ix) && ix >= 0 && ix < links.Count) // Validate index
                 {
@@ -157,15 +161,15 @@ namespace MJU23v_DTP_T2
         {
             Console.WriteLine("Create a new link:");
             Console.Write("  enter Category: ");
-            string category = Console.ReadLine();
+            string category = Console.ReadLine() ?? "";
             Console.Write("  enter Group: ");
-            string group = Console.ReadLine();
+            string group = Console.ReadLine() ?? "";
             Console.Write("  enter Name: ");
-            string name = Console.ReadLine();
+            string name = Console.ReadLine() ?? "";
             Console.Write("  enter Description: ");
-            string descr = Console.ReadLine();
+            string descr = Console.ReadLine() ?? "";
             Console.Write("  Enter Link: ");
-            string link = Console.ReadLine();
+            string link = Console.ReadLine() ?? "";
             Link newLink = new Link(category, group, name, descr, link);
             links.Add(newLink);
         }
@@ -190,17 +194,17 @@ namespace MJU23v_DTP_T2
                 {
                     filename = $@"..\..\..\links\{arg[1]}";
                 }
-                links = new List<Link>();
+                var loadedLinks = new List<Link>();
                 using (StreamReader sr = new StreamReader(filename))
                 {
-                    int numbering = 0;
                     string line = sr.ReadLine();
                     while (line != null)
                     {
                         Link Links = new Link(line);
-                        links.Add(Links);
+                        loadedLinks.Add(Links);
                         line = sr.ReadLine();
                     }
+                    links = loadedLinks;
                     Console.WriteLine("Successfully loaded");
                 }
             }
